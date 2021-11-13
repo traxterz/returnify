@@ -23,16 +23,17 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
     testImplementation(kotlin("test"))
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
+        freeCompilerArgs = listOf("-Xjsr305=strict", "-Xopt-in=kotlin.RequiresOptIn")
         jvmTarget = "1.8"
         languageVersion = "1.5"
         apiVersion = "1.5"
-
     }
 }
 
@@ -43,9 +44,9 @@ val sourcesJar by tasks.registering(Jar::class) {
 
 publishing {
     (publications) {
-        register("project-name", MavenPublication::class) {
+        register("returnify", MavenPublication::class) {
             groupId = "com.github.traxterz"
-            artifactId = "project-name"
+            artifactId = "returnify"
             from(components["java"])
             artifact(sourcesJar)
         }
